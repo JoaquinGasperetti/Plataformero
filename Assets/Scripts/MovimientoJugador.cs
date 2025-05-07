@@ -21,7 +21,7 @@ public class MovimientoJugador : MonoBehaviour
 
     void Update()
     {
-        // Chequeo si el jugador está tocando el suelo
+        
         estaEnElSuelo = Physics.CheckSphere(chequeoSuelo.position, radioChequeo, capaSuelo);
 
         if (estaEnElSuelo && velocidadY.y < 0)
@@ -29,26 +29,26 @@ public class MovimientoJugador : MonoBehaviour
             velocidadY.y = -2f;
         }
 
-        // Movimiento horizontal
+        
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
         Vector3 movimiento = transform.right * x + transform.forward * z;
         controller.Move(movimiento * velocidad * Time.deltaTime);
 
-        // Salto
+        
         if (Input.GetButtonDown("Jump") && estaEnElSuelo)
         {
             velocidadY.y = Mathf.Sqrt(fuerzaSalto * -2f * gravedad);
         }
 
-        // Aplicamos gravedad
+        
         velocidadY.y += gravedad * Time.deltaTime;
         controller.Move(velocidadY * Time.deltaTime);
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        // Si tocamos un objeto con la capa "Lava", reiniciamos la escena
+        
         if (hit.gameObject.layer == LayerMask.NameToLayer("Lava"))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
